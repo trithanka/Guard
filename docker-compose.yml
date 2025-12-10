@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: guard-db
+    restart: always
+    environment:
+      POSTGRES_USER: guard
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: guard
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    volumes:
+      - guard-db-data:/var/lib/postgresql/data   # named volume
+
+volumes:
+  guard-db-data:
