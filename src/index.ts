@@ -1,9 +1,13 @@
 import { Hono } from 'hono'
 
+
 const app = new Hono()
 
 app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
 
-export default app
+export default {
+  port : 2154,
+  fetch:app.fetch
+}

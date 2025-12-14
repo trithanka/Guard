@@ -7,9 +7,8 @@ services:
       POSTGRES_USER: guard
       POSTGRES_PASSWORD: root
       POSTGRES_DB: guard
-      PGDATA: /var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - guard-db-data:/var/lib/postgresql/data   # named volume
 
