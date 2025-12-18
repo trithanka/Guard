@@ -1,5 +1,6 @@
 import type { OpenAPIHono } from "@hono/zod-openapi";
 import packageJSON = require('../../package.json');
+import { Scalar } from "@scalar/hono-api-reference";
 
 export default function configureOpenAPI(app: OpenAPIHono) {
     // The OpenAPI documentation will be available at /doc
@@ -10,4 +11,14 @@ export default function configureOpenAPI(app: OpenAPIHono) {
             title: packageJSON.name,
         },
     })
+
+    app.get(
+        '/doc-view',
+        Scalar({
+          url: '/doc',
+          theme: 'kepler',
+          layout: 'classic',
+        })
+      )
+      
 }

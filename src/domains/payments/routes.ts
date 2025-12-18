@@ -1,6 +1,6 @@
-import { Hono } from "hono";
+import { OpenAPIHono } from "@hono/zod-openapi";
 
-const paymentsRouter = new Hono();
+const paymentsRouter = new OpenAPIHono();
 
 // Payments routes will be added here
 

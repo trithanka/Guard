@@ -1,6 +1,6 @@
-import { Hono } from "hono";
+import { OpenAPIHono } from "@hono/zod-openapi";
 
-const bookingsRouter = new Hono();
+const bookingsRouter = new OpenAPIHono();
 
 // Bookings routes will be added here
 

@@ -1,6 +1,5 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { logger } from 'hono/logger';
-import type { Hono } from 'hono';
 
 /**
  * Create a configured OpenAPIHono application instance
@@ -9,7 +8,7 @@ import type { Hono } from 'hono';
  */
 export function createApp(options?: {
 	enableLogger?: boolean;
-	routes?: Array<{ path: string; router: Hono }>;
+	routes?: Array<{ path: string; router: OpenAPIHono }>;
 }) {
 	const app = new OpenAPIHono();
 

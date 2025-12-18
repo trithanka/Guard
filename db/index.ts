@@ -1,2 +1,2 @@
 // Export all database schemas
-export * from "./schema/user.schema";
+export * from "./schema/auth.schema";
