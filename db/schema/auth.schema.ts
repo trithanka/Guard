@@ -1,4 +1,4 @@
-import { boolean, index, jsonb, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { boolean, date, index, jsonb, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 // === BETTER-AUTH REQUIRED TABLES ===
 // Extended user table with custom columns from your original users table
@@ -20,6 +20,8 @@ export const user = pgTable(
 		phoneNumber: varchar("phoneNumber", { length: 15 }).unique(),
 		emergencyContacts: jsonb("emergencyContacts").$type<string[]>().default([]), // ["+919876543210"]
 		phoneNumberVerified: boolean("phoneNumberVerified").notNull().default(false),
+		gender: varchar("gender", { length: 20 }), // e.g., "male", "female", "other"
+		dob: date("dob"), // Date of birth
 	},
 	(table) => ({
 		phoneIdx: index("user_phoneNumber_idx").on(table.phoneNumber),

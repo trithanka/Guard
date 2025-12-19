@@ -3,7 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { phoneNumber } from "better-auth/plugins";
 import { db } from "./db"; // your drizzle instance
 import * as schema from "../../db/index";
-import { eq } from "drizzle-orm";
+import { eq, and, gt } from "drizzle-orm";
 
 export const auth = betterAuth({
 	database: drizzleAdapter(db, {
@@ -41,6 +41,42 @@ export const auth = betterAuth({
 				// TODO: Implement sending OTP code via SMS
 				// Example with Twilio, AWS SNS, or your SMS provider:
 				// await smsProvider.send(phoneNumber, `Your verification code is: ${code}`);
+			},
+			verifyOTP: async ({ phoneNumber, code }, ctx) => {
+				// Bypass code for testing/development
+				if (code === "777777") {
+					return true;
+				}
+
+				// Normal OTP verification
+				const verification = await db
+					.select()
+					.from(schema.verification)
+					.where(
+						and(
+							eq(schema.verification.identifier, phoneNumber),
+							gt(schema.verification.expiresAt, new Date())
+						)
+					)
+					.limit(1);
+
+				if (verification.length === 0) {
+					return false;
+				}
+
+				const otpRecord = verification[0];
+				// Better Auth stores OTP as "code:attempts" format
+				const [otpValue] = otpRecord.value.split(":");
+
+				if (otpValue === code) {
+					// Delete the verification record after successful verification
+					await db
+						.delete(schema.verification)
+						.where(eq(schema.verification.id, otpRecord.id));
+					return true;
+				}
+
+				return false;
 			},
 		}),
 	],

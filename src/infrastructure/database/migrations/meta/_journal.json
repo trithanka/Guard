@@ -29,6 +29,13 @@
       "when": 1766088125873,
       "tag": "0003_left_deathstrike",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1766168577308,
+      "tag": "0004_lively_shiva",
+      "breakpoints": true
     }
   ]
 }
