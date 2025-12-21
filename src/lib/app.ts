@@ -1,5 +1,6 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { logger } from 'hono/logger';
+import { cors } from 'hono/cors';
 
 /**
  * Create a configured OpenAPIHono application instance
@@ -11,6 +12,15 @@ export function createApp(options?: {
 	routes?: Array<{ path: string; router: OpenAPIHono }>;
 }) {
 	const app = new OpenAPIHono();
+
+	// Add CORS middleware for Expo/React Native
+	app.use('*', cors({
+		origin: '*', // Allow all origins in development
+		allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+		allowHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+		exposeHeaders: ['Content-Type'],
+		credentials: true,
+	}));
 
 	// Add logger middleware if enabled (default: true)
 	if (options?.enableLogger !== false) {

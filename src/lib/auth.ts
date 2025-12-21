@@ -1,6 +1,7 @@
 import { betterAuth, generateId } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { phoneNumber } from "better-auth/plugins";
+import { expo } from "@better-auth/expo";
 import { db } from "./db"; // your drizzle instance
 import * as schema from "../../db/index";
 import { eq, and, gt } from "drizzle-orm";
@@ -16,6 +17,7 @@ export const auth = betterAuth({
 		},
 	}),
 	plugins: [
+		expo(),
 		phoneNumber({
 			sendOTP: async ({ phoneNumber, code }, _ctx) => {
 				// Check if user with this phone number already exists
